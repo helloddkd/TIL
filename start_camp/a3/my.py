@@ -10,7 +10,7 @@ real_numbers = []
 for key in data:
    if 'drwtNo' in key:
          real_numbers.append(data[key])
-         
+
          
 real_numbers.sort()
 bonus_number=data['bnusNo']

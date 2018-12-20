@@ -16,6 +16,7 @@ for keyword in keywords:
 from darksky import forecast
 
 multicampus = forecast('f36c30487bce21b9a7c33f3fde36cad2',37.501571,127.039724)
+print(multicampus['currently']['summary'])
 print(multicampus['currently']['temperature'])
 
 
