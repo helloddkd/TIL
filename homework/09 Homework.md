@@ -45,12 +45,18 @@
 ![1547452981011](C:\Users\student\AppData\Roaming\Typora\typora-user-images\1547452981011.png)
 
 ```html
+
+
 <body>
+    <form method="POST">
        <label for="id">ID :</label>
         <input type="text" name="id" value="user">
         <br>
         <label for="pw">PWD :</label>
         <input type="password" name="pw" value="****">
+        <input type = "submit" value = "로그인"/>
+    </form>
 </body>
+
 ```
 
