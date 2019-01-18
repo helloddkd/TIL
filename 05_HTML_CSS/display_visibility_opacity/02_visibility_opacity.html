@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+      .visible{ visibility: visible;}
+      .hidden { visibility: hidden;}
+      table, td{ border: 1px solid black;}
+      .collapse {
+        visibility: collapse;
+        /* visibility: hidden; */
+        /* collapse는 진짜로 없어진다. 테이블에서만 사용. 안보이고 공간도없.
+        displaynone 안보이고 공간도 없.
+        히든은 공간은 차지하고있는데 안보임. */
+        }
+      div, img {
+        float: left;
+        width: 200px;
+        height: 200px;
+        margin: 30px;
+        background-color: darkblue;
+        color: white;
+        opacity: 0.5;
+        transition: opacity 0.5s;
+      }
+      div:hover, img:hover {
+        opacity: 1.0;
+      }
+    </style>
+    <title>visibility_opacity</title>
+</head>
+
+<body>
+  <h1>Visibility Opacity</h1>
+  <h2 class="visible">visibility: visible</h2>
+  <h2 class="hidden">visibility: hidden</h2>
+  <h2 style="display:none">display:none</h2>
+
+  <table>
+    <tr>
+      <td>A</td>
+      <td>B</td>
+    </tr>
+    <tr class="collapse">
+      <td>A</td>
+      <td>B</td>
+    </tr>
+  </table>
+  <div>Opacity 0.5</div>
+  <img src="https://picsum.photos/200/200" alt="dummy">
+</body>
+</html>
