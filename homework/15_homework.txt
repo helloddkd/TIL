@@ -1,0 +1,32 @@
+1. 우리가 사용하는 SQLite 는 RDBMS 에 속한다. RDBMS 의 특징을 2가지만 작성하 세요.
+
+1) 사용자에게 데이터를 관계로서 표현한다. 즉, 행과 열의 집합으로 구성된 테이블의 묶음 형식으로 데이터를 제공한다.
+2) 테이블 형식의 데이터를 조작할 수 있는 관계 연산자를 제공한다.
+
+
+2.  True False 
+2.1. 모든 RDBMS 같은 SQL 문을 사용한다. [ FALSE ] 
+2.2. SQL 에서 명령어는 대문자로 써야만 동작한다. [ False ] 
+2.3. 일반적인 SQL 문에서 명령어는 세미콜론(;) 으로 끝난다. [ True ] 
+2.4. SQLite 에서 dot(.) 으로 시작하는 명령어는 SQL 이 아니다.[ False ] 
+2.5. 한개의 DB 에는 한개의 테이블만 존재한다. [ False ]
+
+
+3. 다음 코드의 실행결과로 나타나는 값을 작성하세요.
+
+sqlite> .nullvalue 'NULL'
+sqlite> CREATE TABLE ssafy (
+ …> id INTEGER, 
+…> location TEXT, 
+…> class INTEGER 
+…> ); 
+
+sqlite> INSERT INTO ssafy (id, location) 
+…> VALUES (1, ‘JEJU’);
+
+sqlite> SELECT class FROM ssafy WHERE id=1;
+
+---------------------------------------------------------------
+-> 답은 NULL이다. 아무런 결과도 나타나지 않는다.
+값이 할당되지 않았기 때문이다.
+
