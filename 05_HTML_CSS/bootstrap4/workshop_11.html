@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <title>Bootstrap</title>
+  <style>
+    div.content{
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV Bar START -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Bootstrap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Git</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Python</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+<!-- NAV Bar END -->
+<div class="container">
+<!-- FORM START -->
+    <form>
+      <div class="form-group">
+        <label for="InputEmail1">Email address</label>
+        <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="Password1">Password</label>
+        <input type="password" class="form-control" id="Password1" placeholder="Password">
+      </div>
+      <div class="password_confirmation">
+        <label for="InputPassword1">Password Confirmation</label>
+        <input type="password" class="form-control" id="InputPassword1" placeholder="Password Confirmation">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  <!-- FORM END -->
+
+  <!-- Cards START -->
+  <div class="row content">
+    <div class="col-4 col-sm-6 col-md-4">
+      <div class="card" style="width: 22rem;">
+        <img src="git.png" class="card-img-top" alt="git">
+        <div class="card-body">
+          <h5 class="card-title">Git</h5>
+          <p class="card-text">Git은 분산 버전관리 시스템이다.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      </div>
+      <div class="col-4 col-sm-6 col-md-4">
+        <div class="card" style="width: 22rem;">
+          <img src="git.png" class="card-img-top" alt="git">
+          <div class="card-body">
+            <h5 class="card-title">Git</h5>
+            <p class="card-text">Git은 분산 버전관리 시스템이다.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+        </div>
+        <div class="col-4 col-sm-6 col-md-4">
+          <div class="card" style="width: 22rem;">
+            <img src="git.png" class="card-img-top" alt="git">
+            <div class="card-body">
+              <h5 class="card-title">Git</h5>
+              <p class="card-text">Git은 분산 버전관리 시스템이다.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          </div>
+    </div>
+
+  </div>
+
+
+
+</body>
+</html>
