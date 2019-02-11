@@ -33,9 +33,13 @@ def create_posting(request):
 def edit_posting(request, posting_id):
     posting = Posting.objects.get(id=posting_id)
     if request.method == 'GET':
-        return render(request, 'sns/edit.html', {'posting': posting})
+        icons = {'fas fa-question': '?', 'far fa-smile':':)', 'far fa-angry':':(', 'far fa-smile-wink': ';)', 'far fa-grin-hearts':'♡', }
+        return render(request, 'sns/edit.html', {'posting': posting, 'icons': icons })
     else:
         posting.content = request.POST.get('content')
+        posting.icon = request.POST.get('icon')
+        if request.FILES.get('image'):
+            posting.image = request.POST.get('image')
         posting.save()
         return redirect('sns:posting_detail', posting_id)
 
@@ -63,6 +67,4 @@ def delete_comment(request, posting_id, comment_id):
     if request.method == 'POST':
         comment = Comment.objects.get(id=comment_id)
         comment.delete()
-        return redirect('sns:posting_detail', posting_id)
-    else:
-        return redirect('sns:posting_detail', posting_id)
+    return redirect('sns:posting_detail', posting_id)
