@@ -1,0 +1,35 @@
+{% extends 'sns/base.html' %}
+
+{% block list %}active{% endblock %}
+
+{% block body %}
+    {% include 'sns/_header.html' %}
+    <hr>
+    {% if postings %}
+        <section class="card-columns">
+            {% for posting in postings %}
+                    <article class="card mb-2">
+                        <a href="{% url 'sns:posting_detail' posting.id %}">
+                            {% if posting.image %}
+                                <img src="{{ posting.image.url }}" alt="{{ posting.image }}" class="card-img-top image-fluid">
+                            {% else %}
+                                <img src="http://lorempixel.com/g/150/75" alt="random_img_{{ forloop.counter }}" class="card-img-top image-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <i class="{{ posting.icon }}"></i>
+                            <span class="float-right">댓글: {{ posting.comment_set.count }}</span>
+                        <div class="list-inline">
+                            <p class="text-right text-muted m-0"><small>작성일: {{ posting.created_at }}</small></p>
+                            {% if posting.updated_at != posting.created_at %}
+                                <p class="text-right text-muted m-0"><small>수정일: {{ posting.updated_at }}</small></p>
+                            {% endif %}
+                        </div>
+                        </div>
+                    </article>
+            {% endfor %}
+        </section>
+
+    {% endif %}
+
+{% endblock %}
