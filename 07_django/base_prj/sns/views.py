@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Posting, Comment
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -15,7 +16,7 @@ def posting_detail(request, posting_id):
 
     return render(request, 'sns/detail.html', {'posting': posting, 'comments':comments})
 
-
+@login_required(login_url='/accounts/signin/')
 def create_posting(request):
     if request.method == "POST":
         posting = Posting()
