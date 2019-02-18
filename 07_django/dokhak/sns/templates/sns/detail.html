@@ -1,0 +1,8 @@
+{% extends 'sns/base.html' %}
+
+
+{% block body %}
+<img src="{{ posting.image.url }}" alt="{{ posting.image }}">
+    <p>{{ posting.title }}</p>
+    <p>{{ posting.content }}</p>
+{% endblock %}

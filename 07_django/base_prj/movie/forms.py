@@ -1,6 +1,7 @@
 from django import forms
 from .models import Movie
 
+
 class MovieForm(forms.Form):
     title = forms.CharField(max_length=100)
     title_eng = forms.CharField(max_length=100)

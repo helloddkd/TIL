@@ -42,6 +42,7 @@ def create(request):
         form = MovieModelForm()
     return render(request, 'movie/create.html', {'form': form})
 
+
 def update(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     if request.method == 'POST':
@@ -51,5 +52,5 @@ def update(request, movie_id):
             return redirect('movie:detail', movie_id)
     else:
         form = MovieModelForm(instance=movie)
-    return render(request, 'movie/update.html', {'form':form})
+    return render(request, 'movie/update.html', {'form': form})
 
