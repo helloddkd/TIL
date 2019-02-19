@@ -1,0 +1,15 @@
+{% extends 'sns/base.html' %}
+
+{% block body %}
+<form aciton="{% url 'sns:create_posting' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+</form>
+    {% for posting in postings %}
+        <div>
+            <img src="{{ posting.image.url }}" alt="{{ posting.image }}">
+            <p>{{ posting.title }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

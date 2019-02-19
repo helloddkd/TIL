@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     title_eng = models.CharField(max_length=100)
