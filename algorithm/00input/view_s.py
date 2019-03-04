@@ -12,3 +12,12 @@ for i in range(2, len(case)-2):
 print(result)
 # 먼저 양 옆으로 2 이상 조망권 획득여부 확인. 더 낮은
 # i+1과 i-1, i-1, i-2 중 가장 높은 값을 찾고, 이를 뺀 수를 result에 더한다.
+
+# 더 생각해보기. 뭐가 더 효율적일까? 어떻게 하면 더 효율적인 방법을 찾을 수 있을까?
+
+ans=0
+for i in range(2,N-2):
+    maxH=max(arr[i-2], arr[i-1], arr[i+1], arr[i+2])
+    if arr[i] > maxH:
+        ans = ans+ (arr[i]-maxH)
+print()

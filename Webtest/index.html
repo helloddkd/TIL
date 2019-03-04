@@ -1,0 +1,17 @@
+{% extends 'board/base.html' %}
+
+{% if postings %}
+{% for posting in postings %}
+    <div>
+        {{posting.title}}
+        {{posting.id}}
+        {{posting.content}}
+    </div>
+
+    <form action="{% url 'board:delete' posting.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="delete">
+    </form>
+
+{% endfor %}
+{% endif %}
