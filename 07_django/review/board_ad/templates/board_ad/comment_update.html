@@ -1,0 +1,20 @@
+{% extends 'board_ad/base.html' %}
+
+{% block body %}
+    <h1>{{ posting.title }}</h1>
+    <p>{{ posting.content }}</p>
+    <hr>
+    <a href="{% url 'board_ad:posting_list' %}"><button>List</button></a>
+    <a href="{% url 'board_ad:posting_update' posting.id %}"><button>Update</button></a>
+    <form action="{% url 'board_ad:posting_delete' posting.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('진짜 지울구야?')">Delete</button>
+    </form>
+    <hr>
+
+    <form method="POST" action="{%  url 'board_ad:update_comment' posting.id comment.id %}">
+    {% csrf_token %}
+        <label for="content">comment: </label>
+        <input type="text" id="comment" name="comment" value="{{ comment.content }}">
+        <input type="submit">
+{% endblock %}

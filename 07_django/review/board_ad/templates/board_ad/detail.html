@@ -1,16 +1,39 @@
-{% extends 'board/base.html' %}
+{% extends 'board_ad/base.html' %}
 
 {% block body %}
-    <h1>{{ article.title }}</h1>
-    <p>
-        {{ article.content }}
-    </p>
+    <h1>{{ posting.title }}</h1>
+    <p>{{ posting.content }}</p>
     <hr>
-    <a href="/board/articles/"><button>List</button></a>
-    <a href="/board/articles/{{ article.id }}/edit/"><button>Edit</button></a>
-    <form action="/board/articles/{{ article.id }}/delete/" method="post">
+    <a href="{% url 'board_ad:posting_list' %}"><button>List</button></a>
+    <a href="{% url 'board_ad:posting_update' posting.id %}"><button>Update</button></a>
+    <form action="{% url 'board_ad:posting_delete' posting.id %}" method="POST">
         {% csrf_token %}
-        <button type="submit">Delete</button>
+        <button type="submit" onclick="return confirm('진짜 지울구야?')">Delete</button>
+    </form>
+    <hr>
+
+    <form method="POST" action="{%  url 'board_ad:create_comment' posting.id %}">
+    {% csrf_token %}
+        <label for="content">comment: </label>
+        <input type="text" id="comment" name="comment">
+        <input type="submit">
     </form>
 
+    <hr>
+    <section>
+    <ul>
+    {% for comment in comments %}
+        <li>{{ comment.content }}</li>
+        <span>{{  comment.created_at }}</span>
+        {% if comment.created_at != comment.updated_at %}
+            <span class="text-muted">{{ comment.updated_at }}</span>
+        {% endif %}
+        <form action="{% url 'board_ad:delete_comment' posting.id comment.id %}" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="delete">
+        </form>
+        <button><a href="{% url 'board_ad:update_comment' posting.id comment.id %}"> update </a></button>
+    {% endfor %}
+    </ul>
+    </section>
 {% endblock %}
