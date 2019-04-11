@@ -1,0 +1,18 @@
+{% load bootstrap4 %}
+
+<article class="card">
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="..." class="card-img-top">
+    {% else %}
+    <img src="https://picsum.photos/600/?random" alt="picsum" class="card-img-top">
+    {% endif %}
+    <div class="card-body row">
+        <h5 class="card-title col-12">card title</h5>
+        <p class="card-text col-7">{{ post.content }}</p>
+        <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
+        <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
+            {% csrf_token %}
+            <input type="submit" value="delete" class="btn btn-danger">
+        </form>
+    </div>
+</article>

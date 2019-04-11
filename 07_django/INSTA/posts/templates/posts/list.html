@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+    <h1 class="mt-5">Posts</h1>
+    <hr class="my-5">
+    <section class="card-columns">
+        {% for post in posts %}
+            {% include 'posts/_post.html' %}
+        {% endfor %}
+    </section>
+{% endblock %}
+
