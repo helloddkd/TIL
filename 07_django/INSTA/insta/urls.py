@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('insta/', include('posts.urls'))
+    path('insta/', include('posts.urls')),
+    path('accounts/', include('accounts.urls'))
 ]
 #개발서버에서 자동적으로 이미지등록이 안되어서 써줘야 하는 코드.
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

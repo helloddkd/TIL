@@ -16,10 +16,8 @@ class Profile(models.Model):
 
 class Client(models.Model):
     name = models.CharField(max_length=30)
-
-    class Meta:
-        ordering=('name',)
-
+    # class Meta:
+    #     ordering = ('name',)
     @classmethod
     def dummy_data(cls, n=10):
         for _ in range(n):

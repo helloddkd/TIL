@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'mton',
     'posts',
+    # 'onetoone',
+    'onetomany',
+    'accounts',
 
 ]
 
