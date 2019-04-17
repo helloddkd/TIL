@@ -1,12 +1,16 @@
 from django import forms
-from .models import Post, Image
+from .models import Post, Image, Comment
 
+class CommentModelForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
 
 class PostModelForm(forms.ModelForm):
     # content = forms.EmailField(label='Your Email')
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['content']
         #fields = ['content', ....]
 
 class ImageModelForm(forms.ModelForm):

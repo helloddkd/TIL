@@ -3,6 +3,9 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django_extensions.db.models import TimeStampedModel
 import os
+from django.conf import settings
+from django.contrib.auth.models import User
+
 ENV = os.environ.get('ENVIRONMENT', 'development')
 if ENV == 'development':
     from IPython import embed
@@ -13,6 +16,7 @@ faker = Faker()
 
 class Post(TimeStampedModel):
     content = models.CharField(max_length=140)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     #배포시엔 삭제
     @classmethod
     def dummy(cls, n=10):
@@ -28,3 +32,8 @@ class Image(TimeStampedModel):
         format='JPEG',
         options={'quality': 90}
     )
+
+class Comment(TimeStampedModel):
+    content = models.CharField(max_length=100)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

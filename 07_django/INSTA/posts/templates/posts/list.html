@@ -5,6 +5,7 @@
     <hr class="my-5">
     <section class="card-columns">
         {% for post in posts %}
+            {% include 'posts/_detail.html' %}
             {% include 'posts/_post.html' %}
         {% endfor %}
     </section>

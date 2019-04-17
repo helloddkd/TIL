@@ -1,7 +1,7 @@
 {% load bootstrap4 %}
 
 <article class="card">
-    {% if post.image_set %}
+    {% if post.image_set.all %}
         <div id="post{{post.id}}" class="carousel slide carousel-fade" data-ride="carousel">
             <div class="carousel-inner">
                 {% for image in post.image_set.all %}
@@ -20,15 +20,26 @@
             </a>
         </div>
     {% else %}
-        <img src="..." alt="..." class="card-img-top" />
+        <img src="http://lorempixel.com/600/600" alt="lorempixel" class="card-img-top" />
     {% endif %}
-    <div class="card-body row">
-        <h5 class="card-title col-12">card title</h5>
-        <p class="card-text col-7">{{ post.content }}</p>
-        <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
-        <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
-            {% csrf_token %}
-            <input type="submit" value="delete" class="btn btn-danger">
-        </form>
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title">{{ post.user.username }}</h5>
+            <p class="text-muted">{{ post.created }}</p>
+        </div>
+        <hr class="mt-0 mb-3">
+        <div class="row">
+            {% if post.user == user %}
+                <p class="card-text col-7"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
+                <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
+                <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
+                {% csrf_token %}
+                    <input type="submit" value="delete" class="btn btn-danger">
+                </form>
+            {% else %}
+                <p class="card-text col-12"><a class="text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
+                <div></div>
+            {% endif %}
+        </div>
     </div>
 </article>

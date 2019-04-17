@@ -1,0 +1,46 @@
+{% load bootstrap4 %}
+
+<!-- Modal -->
+<div class="modal fade" id="post{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Comments</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{% url 'posts:create_comment' post.id %}" method="post">
+          {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+                  <input type="submit" value="submit" class="btn btn-primary">
+              {% endbuttons %}
+          </form>
+        {% if post.comment_set.all %}
+          <table class="table table-bordered">
+          <tr><td>username</td><td>comment</td></tr>
+            {% for comment in post.comment_set.all %}
+                <tr>
+                    <td><strong>{{ comment.user.username }}</strong></td>
+                    <td>{{ comment.content }}</td>
+                    <td>
+                        <form action="{% url 'posts:delete_comment' post.id comment.id %}" method="delete">
+                            {% csrf_token %}
+                            <input type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+          </table>
+        {% else %}
+            댓글을 달아주세요!
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
