@@ -30,14 +30,14 @@
         <hr class="mt-0 mb-3">
         <div class="row">
             {% if post.user == user %}
-                <p class="card-text col-7"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
+                <p class="card-text col-7 text-truncate"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
                 <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
                 {% csrf_token %}
                     <input type="submit" value="delete" class="btn btn-danger">
                 </form>
             {% else %}
-                <p class="card-text col-12"><a class="text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
+                <p class="card-text col-12 text-truncate"><a class="text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
                 <div></div>
             {% endif %}
         </div>

@@ -83,7 +83,7 @@ def create_comment(request, post_id):
         form = CommentModelForm()
     return render(request, 'posts/form.html', {'post_form': form})
 
-@require_http_methods(['DELETE'])
+@require_POST
 def delete_comment(request, post_id, comment_id):
     post = get_object_or_404(Post, id=post_id)
     comment = get_object_or_404(Comment, id=comment_id)

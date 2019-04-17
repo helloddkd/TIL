@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="post{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Comments</h5>
@@ -11,24 +11,70 @@
         </button>
       </div>
       <div class="modal-body">
+      <div class="row">
+        <div class="col-6">
+            <article class="card">
+                {% if post.image_set.all %}
+                    <div id="post{{post.id}}" class="carousel slide carousel-fade" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in post.image_set.all %}
+                                <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                                    <img src="{{ image.file.url }}" class="d-block w-100" alt="{{ image.file }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#post{{post.id}}" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#post{{post.id}}" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <img src="http://lorempixel.com/600/600" alt="lorempixel" class="card-img-top" />
+                {% endif %}
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">{{ post.user.username }}</h5>
+                        <p class="text-muted">{{ post.created }}</p>
+                    </div>
+                    <hr class="mt-0 mb-3">
+                    <p class="card-text">{{ post.content }}</p>
+                    {% if post.user == user %}
+                        <div class="row">
+                            <a href="{% url 'posts:update_post' post.id %}" class="offset-8 col-2 text-muted"><button class="btn btn-success">edit</button></a>
+                            <form action="{% url 'posts:delete_post' post.id %}" method="post">
+                            {% csrf_token %}
+                                <input type="submit" value="delete" class="btn btn-danger" class="col-3">
+                            </form>
+                        </div>
+                    {% else %}
+                        <div></div>
+                    {% endif %}
+                </div>
+            </article>
+        </div>
+      <div class="col-6">
           <form action="{% url 'posts:create_comment' post.id %}" method="post">
           {% csrf_token %}
               {% bootstrap_form form %}
               {% buttons %}
-                  <input type="submit" value="submit" class="btn btn-primary">
+                  <input type="submit" value="submit" class="btn btn-primary float-right mr-4 mb-4">
               {% endbuttons %}
           </form>
         {% if post.comment_set.all %}
-          <table class="table table-bordered">
-          <tr><td>username</td><td>comment</td></tr>
+          <table class="table table-hover text-center">
+          <tr><td>username</td><td>comment</td><td>delete</td></tr>
             {% for comment in post.comment_set.all %}
                 <tr>
                     <td><strong>{{ comment.user.username }}</strong></td>
                     <td>{{ comment.content }}</td>
                     <td>
-                        <form action="{% url 'posts:delete_comment' post.id comment.id %}" method="delete">
+                        <form action="{% url 'posts:delete_comment' post.id comment.id %}" method="post">
                             {% csrf_token %}
-                            <input type="submit" value="delete">
+                            <input type="submit" value="delete" class="btn btn-warning btn-sm">
                         </form>
                     </td>
                 </tr>
@@ -38,9 +84,11 @@
             댓글을 달아주세요!
         {% endif %}
       </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
   </div>
 </div>
