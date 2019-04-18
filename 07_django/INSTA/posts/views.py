@@ -13,7 +13,7 @@ def post_list(request):
     return render(request, 'posts/list.html', {'posts': posts, 'form': form})
 
 
-@login_required()
+@login_required
 @require_http_methods(['GET', 'POST'])
 def create_post(request):
     if request.method == 'POST':
@@ -39,7 +39,7 @@ def create_post(request):
     })
 
 
-@login_required()
+@login_required
 @require_http_methods(['GET', 'POST'])
 def update_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -82,8 +82,7 @@ def create_comment(request, post_id):
         form = CommentModelForm()
     return render(request, 'posts/form.html', {'post_form': form})
 
-
-@require_http_methods(['DELETE'])
+@require_POST
 def delete_comment(request, post_id, comment_id):
     post = get_object_or_404(Post, id=post_id)
     comment = get_object_or_404(Comment, id=comment_id)

@@ -1,6 +1,6 @@
 {% load bootstrap4 %}
 
-<article class="card">
+<article class="card mb-5">
     {% if post.image_set.all %}
         <div id="post{{post.id}}" class="carousel slide carousel-fade" data-ride="carousel">
             <div class="carousel-inner">
@@ -25,20 +25,27 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h5 class="card-title">{{ post.user.username }}</h5>
-            <form action="{% url 'posts:toggle_like' post.id %}" method="POST" class="float-right">
-                {% csrf_token %}
-                {% if post in user.like_posts.all %}
-                    <input type="submit" id="like" value="♥" class="bg-white">
+            {% if user.is_authenticated %}
+                <form action="{% url 'posts:toggle_like' post.id %}" method="POST" class="float-right">
+                    {% csrf_token %}
+                    {% if post in user.like_posts.all %}
+                        <input type="submit" id="like" value="♥" class="bg-white">
+                        <label for="like">{{ post.like_users.count }} likes</label>
+                    {% else %}
+                        <input type="submit" value="♡" id="like" class="bg-white">
+                        <label for="like">{{ post.like_users.count }} likes</label>
+                    {% endif %}
+                </form>
+            {% else %}
+                <div class="float-right">
+                    <a href="{% url 'accounts:signup' %}"><input type="submit" id='like' value="♡" class="bg-white"></a>
                     <label for="like">{{ post.like_users.count }} likes</label>
-                {% else %}
-                    <input type="submit" value="♡" id="like" class="bg-white">
-                    <label for="like">{{ post.like_users.count }} likes</label>
-                {% endif %}
-            </form>
+                </div>
+            {% endif %}
 
         </div>
-        <hr class="mt-0 mb-3">
-        <p class="card-text"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
+        <hr class="mt-2 mb-3">
+        <p class="card-text"><a class= "text-reset" data-toggle="modal" data-target="#modal{{ post.id }}">{{ post.content }}</a></p>
         <div class="row">
             <p class="text-muted col-7 lh m-0">{{ post.created }}</p>
             {% if post.user == user %}
