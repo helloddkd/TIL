@@ -26,7 +26,7 @@ class Client(models.Model):
 
 class Hotel(models.Model):
     name = models.CharField(max_length=30)
-    clients = models.ManyToManyField(Client)
+    clients = models.ManyToManyField(Client, related_name='hotels')#client에서 hotels로 접근가능
 
     @classmethod
     def dummy_data(cls, n=10):

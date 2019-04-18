@@ -60,8 +60,7 @@ def update_post(request, post_id):
         return redirect('posts:post_list')
 
 
-
-@login_required()
+@login_required
 @require_POST
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -83,6 +82,7 @@ def create_comment(request, post_id):
         form = CommentModelForm()
     return render(request, 'posts/form.html', {'post_form': form})
 
+
 @require_http_methods(['DELETE'])
 def delete_comment(request, post_id, comment_id):
     post = get_object_or_404(Post, id=post_id)
@@ -90,3 +90,15 @@ def delete_comment(request, post_id, comment_id):
     comment.delete()
     return redirect('posts:post_list')
 
+
+@require_POST
+@login_required
+def toggle_like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    if user in post.like_users.all():
+    # if post.like_users.get(id=user.id).exist():
+        post.like_users.remove(user)
+    else:
+        post.like_users.add(user)
+    return redirect('posts:post_list')

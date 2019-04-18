@@ -25,21 +25,32 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h5 class="card-title">{{ post.user.username }}</h5>
-            <p class="text-muted">{{ post.created }}</p>
+            <form action="{% url 'posts:toggle_like' post.id %}" method="POST" class="float-right">
+                {% csrf_token %}
+                {% if post in user.like_posts.all %}
+                    <input type="submit" id="like" value="♥" class="bg-white">
+                    <label for="like">{{ post.like_users.count }} likes</label>
+                {% else %}
+                    <input type="submit" value="♡" id="like" class="bg-white">
+                    <label for="like">{{ post.like_users.count }} likes</label>
+                {% endif %}
+            </form>
+
         </div>
         <hr class="mt-0 mb-3">
+        <p class="card-text"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
         <div class="row">
+            <p class="text-muted col-7 lh m-0">{{ post.created }}</p>
             {% if post.user == user %}
-                <p class="card-text col-7"><a class= "text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
                 <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
                 {% csrf_token %}
                     <input type="submit" value="delete" class="btn btn-danger">
                 </form>
             {% else %}
-                <p class="card-text col-12"><a class="text-reset" data-toggle="modal" data-target="#post{{ post.id }}">{{ post.content }}</a></p>
-                <div></div>
+                <div class="col-5"></div>
             {% endif %}
         </div>
+
     </div>
 </article>

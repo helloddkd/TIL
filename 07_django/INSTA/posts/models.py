@@ -17,6 +17,7 @@ faker = Faker()
 class Post(TimeStampedModel):
     content = models.CharField(max_length=140)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     #배포시엔 삭제
     @classmethod
     def dummy(cls, n=10):
