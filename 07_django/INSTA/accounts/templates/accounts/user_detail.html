@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-4">
+            <img src="{{ user_info }}" alt="{{ user_info.username }}-profile-picture">
+        </div>
+        <div class="col-8">
+            <h1 class="text-center">{{ user_info.username }}</h1>
+            <table class="table table-hover text-center">
+                <tr>
+                    {% if user_info != user %}
+                    <td>
+                        <form action="{% url 'accounts:toggle_follow' user_info.username %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-sm {% if user_info in user.followings.all %}btn-primary{% else %}btn-secondary{% endif %}">{% if user_info in user.followings.all %}following{% else %}follow{% endif %}</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                    <td><a data-toggle="modal" data-target="#followinglist">{{ user_info.username }}의 팔로잉 : {{ user_info.followings.count }}명</a></td>
+                    <td><a data-toggle="modal" data-target="#followerlist">{{ user_info.username }}의 팔로워 : {{ user_info.followers.count }}명</a></td>
+                </tr>
+            </table>
+                {# follow 버튼이랑 posts count, follower count, introduction #}
+            </div>
+        </div>
+
+
+    <h2 class="mt-5">{{ user_info.username }}'s posts</h2>
+    <hr class="mb-5 mt-3">
+    <div class="card-columns">
+    {% for post in  user_info.post_set.all %}
+        {% include 'posts/_post.html' with post=post form=form %}
+    {% empty %}
+        <p>아직 작성된 post가 없습니다.</p>
+    {% endfor %}
+    </div>
+
+
+
+<div class="modal fade" id="followerlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Follower's List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+              <table class="text-center table">
+                {% for follower in user_info.followers.all %}
+                    <tr><td>{{ follower.username }}</td></tr>
+                {% endfor %}
+              </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="followinglist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" class="bg-info">Following List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="text-center table">
+            {% for following in user_info.followings.all %}
+                <tr><td>{{ following.username }}</td></tr>
+            {% endfor %}
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

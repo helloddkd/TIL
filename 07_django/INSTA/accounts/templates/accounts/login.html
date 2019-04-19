@@ -6,7 +6,9 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-            <input type="submit" value="signup" class="btn btn-primary mt-3">
+            <input type="submit" value="login" class="btn btn-primary mt-3 d-inline">
+            <a href="{% url 'accounts:signup' %}" class="btn btn-success mt-3">signup</a>
         {% endbuttons %}
     </form>
+
 {% endblock %}

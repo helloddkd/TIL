@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from .models import Post, Image, Comment
 from .forms import PostModelForm, ImageModelForm, CommentModelForm
@@ -67,6 +67,7 @@ def delete_post(request, post_id):
     post.delete()
     return redirect('posts:post_list')
 
+@login_required
 @require_POST
 def create_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -77,17 +78,18 @@ def create_comment(request, post_id):
             comment.post = post
             comment.user = request.user
             comment.save()
-            return redirect('posts:post_list')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         form = CommentModelForm()
     return render(request, 'posts/form.html', {'post_form': form})
+
 
 @require_POST
 def delete_comment(request, post_id, comment_id):
     post = get_object_or_404(Post, id=post_id)
     comment = get_object_or_404(Comment, id=comment_id)
     comment.delete()
-    return redirect('posts:post_list')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @require_POST
@@ -100,4 +102,4 @@ def toggle_like(request, post_id):
         post.like_users.remove(user)
     else:
         post.like_users.add(user)
-    return redirect('posts:post_list')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
