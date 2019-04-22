@@ -14,15 +14,30 @@ faker = Faker()
 # Create your models here.
 
 
+class HashTag(TimeStampedModel):
+    content = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        ordering = ['content']
+
+
 class Post(TimeStampedModel):
     content = models.CharField(max_length=140)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
+    tags = models.ManyToManyField(HashTag, blank=True, related_name='posts')
     #배포시엔 삭제
     @classmethod
     def dummy(cls, n=10):
         for i in range(n):
             Post.objects.create(content=faker.text(120))
+
+    class Meta:
+        ordering = ['-created']
+
 
 class Image(TimeStampedModel):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

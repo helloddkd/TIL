@@ -52,7 +52,14 @@
 
         </div>
         <hr class="mt-2 mb-3">
-        <p class="card-text">{{ post.content }}</p>
+        <p class="card-text text-truncate">{{ post.content }}</p>
+        <div class="text-truncate mb-1">
+            {% for tag in post.tags.all %}
+                <a href="{% url 'posts:tag_posts' tag.content %}"><span>#{{ tag.content }} </span></a>
+                {% empty %}
+                <span class="text-white">태그없음</span>
+            {% endfor %}
+        </div>
         <div class="row">
             <p class="text-muted col-7 lh m-0">{{ post.created }}</p>
             {% if post.user == user %}

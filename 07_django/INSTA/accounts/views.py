@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from posts.forms import CommentModelForm
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 # Create your views here.
 
@@ -28,6 +29,8 @@ def login(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
+            user = form.get_user()
+            messages.add_message(request, messages.INFO, 'last login {{ user.last_login }}')
             auth_login(request, form.get_user())
             return redirect(request.GET.get('next') or 'posts:post_list')
     else:
@@ -38,6 +41,7 @@ def login(request):
 @login_required
 def logout(request):
     auth_logout(request)
+    messages.add_message(request, messages.SUCCESS, 'Logout Successfully')
     return redirect('posts:post_list')
 
 
@@ -58,3 +62,4 @@ def toggle_follow(request, username):
         else:
             user.followings.add(followee)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/insta/'))
+
