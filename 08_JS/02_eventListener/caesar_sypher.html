@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <label for="user-n">몇 칸 밀까요</label>
+    <input type="number" id="user-n" value="0">
+</div>
+
+<div>
+    <label for="user-input">밀어 봅시다</label>
+    <input autofocus type="text" id="user-input">
+</div>
+
+<h1 id="user-output"></h1>
+
+<script>
+    const inputArea = document.querySelector('#user-input');
+    const inputN = document.querySelector('#user-n');
+    const resultArea = document.querySelector('#user-output');
+
+
+    inputArea.addEventListener('input', e => {
+        const n = Number(inputN.value);
+        const charArray = inputArea.value.split('');
+        const newstring = charArray.map(char => {
+            let charNumber = char.charCodeAt();
+            charNumber += n;
+            return String.fromCharCode(charNumber);
+        }).join('');
+        resultArea.innerHTML = newstring;
+    })
+
+
+
+
+</script>
+
+</body>
+</html>

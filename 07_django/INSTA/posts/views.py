@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from .models import *
 from .forms import PostModelForm, ImageModelForm, CommentModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from IPython import embed
 # Create your views here.
 
 
@@ -120,14 +122,18 @@ def delete_comment(request, post_id, comment_id):
 @require_POST
 @login_required
 def toggle_like(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    user = request.user
-    if user in post.like_users.all():
-    # if post.like_users.get(id=user.id).exist():
-        post.like_users.remove(user)
+    if request.is_ajax():
+        user = request.user
+        post = get_object_or_404(Post, id=post_id)
+        is_active = True
+        if user in post.like_users.all():
+            post.like_users.remove(user)
+            is_active = False
+        else:
+            post.like_users.add(user)
+        return JsonResponse({'likeCount': post.like_users.count(), 'is_active':is_active})
     else:
-        post.like_users.add(user)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return HttpResponseBadRequest()
 
 
 def tag_posts(request, tag):

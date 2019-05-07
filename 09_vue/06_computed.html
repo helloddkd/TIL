@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<a href="https://kr.vuejs.org/v2/guide/computed.html">VueJS 공식문서</a>
+<div id="app">
+    <p>원본메시지 : {{message}}</p>
+    <p>뒤집메시지 : {{reverseMessage()}}</p>
+    <p>{{dateMethod()}}</p>
+    <p>{{dateComputed}}</p>
+    <!--    중괄호 안에 하면 안 되는 거
+        1. let i = 1 변수선언
+        2. 값을 표현하는 곳에서 함수여러개돌리는거
+        3. if문 중괄호 안에서 돌리면 안 됨, 하지만 삼항연산자는 가능 {{condition ? a : b}}   -->
+</div>
+
+<script src="./vue.js"></script>
+<script>
+
+const app = new Vue({
+    el:'#app',
+    data:{
+        message:'안녕하세요',
+        d: Date.now()
+    },
+    methods:{
+        reverseMessage(){
+            return this.message.split('').reverse().join('')
+        },
+        dateMethod(){
+            return Date.now()
+        }
+    },
+    computed:{
+        reversedMessage(){
+            return this.message.split('').reverse().join('')
+        },
+        dateComputed(){
+            return Date.now()
+        }
+    }
+})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="result-area">
+
+    </div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const getDogAndPush = () => {
+        axios.get('https://dog.ceo/api/breeds/image/random')
+            .then(response => response.data)
+            .then(data => {
+                const img = document.createElement('img');
+                img.src = data.message;
+                img.alt = 'DOG'
+                return img
+            })
+            .then(imgTag => document.querySelector('#result-area').append(imgTag))
+            .catch(err => console.error(err))
+    };
+    getDogAndPush();
+
+    const getDogAndPush2 = async () => {
+        const response = await axios.get('https://dog.ceo/api/breeds/image/random');
+        const data = response.data;
+        const imgTag = document.createElement('img');
+        imgTag.src = data.message;
+        imgTag.alt = 'Dog';
+        document.querySelector('#result-area').appendChild(imgTag)
+    };
+    getDogAndPush2()
+
+</script>
+</body>
+</html>

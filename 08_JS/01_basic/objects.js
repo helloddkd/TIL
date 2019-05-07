@@ -12,3 +12,13 @@ me.name;
 me['name']; //여기는 꼭 따옴표 붙여야
 
 me.app
+
+
+function myFunc(){
+    return n => n+1
+}
+
+const num_101 = [];
+
+num_101.push(myFunc()(100));
+console.log(num_101);

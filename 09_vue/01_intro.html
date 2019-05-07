@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+<div id="app">
+    <input type="text" v-on:input="changetitle($event, '따봉')">
+    <p>{{message}}</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app', //vue instance와 html element를 바인딩하는 중이다.
+        data: { //해당 script가 실행되는 최초의 data initializing
+            message: 'Hi',
+        },
+        methods: {
+            changetitle: function(e, word) {
+                this.message = e.target.value;
+                this.message += word;
+            }
+        }
+    });
+    Post({'title': 'hi', 'content': 'bye'})
+
+</script>
+
+</body>
+</html>

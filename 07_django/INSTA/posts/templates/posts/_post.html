@@ -33,20 +33,18 @@
                 <h5 class="card-title d-inline"><a href="{% url 'accounts:user_detail' post.user.username %}" class="text-reset">{{ post.user.username }} </a></h5>
             </div>
             {% if user.is_authenticated %}
-                <form action="{% url 'posts:toggle_like' post.id %}" method="POST" class="float-right">
-                    {% csrf_token %}
-                    {% if post in user.like_posts.all %}
-                        <input type="submit" id="like" value="♥" class="bg-white">
-                        <label for="like">{{ post.like_users.count }} likes</label>
+                <div>
+                    {% if user in post.like_users.all %}
+                        <i class="like-button fas fa-heart fa-2x activate like-button-{{ post.id }}" data-id="{{ post.id }}"></i>
                     {% else %}
-                        <input type="submit" value="♡" id="like" class="bg-white">
-                        <label for="like">{{ post.like_users.count }} likes</label>
+                        <i class="like-button far fa-heart fa-2x like-button-{{ post.id }}" data-id="{{ post.id }}"></i>
                     {% endif %}
-                </form>
+                    <span class="like-count-{{ post.id }}">{{ post.like_users.count }} likes</span>
+                </div>
             {% else %}
                 <div class="float-right">
-                    <a href="{% url 'accounts:signup' %}"><input type="submit" id='like' value="♡" class="bg-white"></a>
-                    <label for="like">{{ post.like_users.count }} likes</label>
+                    <a href="{% url 'accounts:signup' %}"><i class="like-button far fa-heart fa-2x text-muted" data-id="{{ post.id }}"></i></a>
+                    <span id="like-count-{{ post.id }}">{{ post.like_users.count }} likes</span>
                 </div>
             {% endif %}
 
@@ -63,10 +61,10 @@
         <div class="row">
             <p class="text-muted col-7 lh m-0">{{ post.created }}</p>
             {% if post.user == user %}
-                <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="btn btn-success">edit</button></a>
+                <a href="{% url 'posts:update_post' post.id %}" class="col-2 text-muted"><button class="text-truncate btn btn-success">edit</button></a>
                 <form action="{% url 'posts:delete_post' post.id %}" method="post" class="col-3">
                 {% csrf_token %}
-                    <input type="submit" value="delete" class="btn btn-danger">
+                    <input type="submit" value="delete" class="btn btn-danger text-truncate">
                 </form>
             {% else %}
                 <div class="col-5"></div>

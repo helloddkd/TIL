@@ -1,0 +1,16 @@
+{
+  "name": "ss3_jay",
+  "version": "2.0.0",
+  "description": "Test Deploy",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BAIK JIWON",
+  "license": "ISC"
+}

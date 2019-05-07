@@ -1,3 +1,50 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    function getCookies(key='') {
+        const cookieSet = {};
+        document.cookie.split('; ').forEach(cookieString => {
+            const kv = cookieString.split('=');
+            cookieSet[kv[0]] = kv[1];
+        });
+        return key ? cookieSet[key]: cookieSet
+    }
+    const likeButtons = document.querySelectorAll('.like-button');
+    getCookies().csrftoken
+    likeButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            const postId = button.dataset.id;
+            const URL = `/insta/${postId}/like/`;
+            //request의 cookie 중에 csrftoken이라는 key값을 가진 친구를 같이 보내라
+            axios.defaults.xsrfCookieName = 'csrftoken'; //value
+            axios.defaults.xsrfHeaderName = 'X-CSRFToken'; // key
+            // 이 request는 xhr 형식으로 보내는 것입니다! ajax
+            axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            axios.post(URL)
+                .then(response => {
+                    const likeCountAreas = document.querySelectorAll(`.like-count-${postId}`);
+                    for (const likeCountArea of likeCountAreas){
+                        likeCountArea.innerHTML = `${response.data.likeCount} likes`
+                    }
+
+                    const likeBs = document.querySelectorAll(`like-button-${postId}`);
+                    console.log(likeBs);
+                    for (const likeB of likeBs) {
+                        if (response.data.is_active) {
+                            if (!('activate' in likeB.classList)){
+                            likeB.classList.remove('far');
+                            likeB.classList.add('activate', 'fas');}
+                        } else { if('activate' in likeB.classList) {
+                            likeB.classList.add('far');
+                            likeB.classList.remove('activate', 'fas');
+                        }}
+                    }
+                });
+        })
+    })
+</script>
+

@@ -41,16 +41,21 @@
                 <div class="card-body pb-1">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title">{{ post.user.username }}</h5>
-                        <form action="{% url 'posts:toggle_like' post.id %}" method="POST" class="float-right">
-                            {% csrf_token %}
-                            {% if post in user.like_posts.all %}
-                                <input type="submit" id="like" value="♥" class="bg-white">
-                                <label for="like">{{ post.like_users.count }} likes</label>
-                            {% else %}
-                                <input type="submit" value="♡" id="like" class="bg-white">
-                                <label for="like">{{ post.like_users.count }} likes</label>
-                            {% endif %}
-                        </form>
+                        {% if user.is_authenticated %}
+                            <div>
+                                {% if user in post.like_users.all %}
+                                    <i class="like-button fas fa-heart fa-2x activate like-button-{{ post.id }}" data-id="{{ post.id }}"></i>
+                                {% else %}
+                                    <i class="like-button far fa-heart fa-2x like-button-{{ post.id }}" data-id="{{ post.id }}"></i>
+                                {% endif %}
+                                <span class="like-count-{{ post.id }}">{{ post.like_users.count }} likes</span>
+                            </div>
+                        {% else %}
+                            <div class="float-right">
+                                <a href="{% url 'accounts:signup' %}"><i class="like-button far fa-heart fa-2x text-muted" data-id="{{ post.id }}"></i></a>
+                                <span id="like-count-{{ post.id }}">{{ post.like_users.count }} likes</span>
+                            </div>
+                        {% endif %}
                     </div>
                     <hr class="mt-0 mb-3">
                     <p class="card-text">{{ post.content }}</p>
@@ -115,3 +120,4 @@
   </div>
   </div>
 </div>
+

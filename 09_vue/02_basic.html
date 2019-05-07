@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="app">
+    <h1 v-once>{{title}}</h1>
+    <p>{{ sayHello() }}</p>
+    <a v-bind:href="link">Google</a>
+    <p v-html="rawhtml"></p> <!-- XSS: Cross Site Scripting 댓글창에 스크립트 쓰면 개판나던거! -->
+
+</div>
+
+<script src="./vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            title: 'Hello',
+            link: 'https://google.com',
+            rawhtml:'<a href="https://naver.com">Naver</a>'
+        },
+        methods:{
+            sayHello: function(){
+                this.title = 'Goodbye';
+                return this.title;
+            }
+        }
+    })
+</script>
+</body>
+</html>
